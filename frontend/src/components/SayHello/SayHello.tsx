@@ -1,9 +1,11 @@
 import { FC } from 'react';
 
-const SayHello: FC = () => {
+import { ISayHello } from './types';
+
+const SayHello: FC<ISayHello> = ({ helloMessage }) => {
   return (
     <>
-      <h3>Hello, world!</h3>
+      <h3>{helloMessage || 'Loading..'}</h3>
     </>
   );
 };
