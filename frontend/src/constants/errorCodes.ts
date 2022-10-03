@@ -1,0 +1,1 @@
+export const UNAUTHORIZED_ACCESS_ERROR_CODE = 401;

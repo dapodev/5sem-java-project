@@ -1,5 +1,6 @@
 module.exports = {
   env: {
+    amd: true,
     browser: true,
     es2021: true,
   },
@@ -8,7 +9,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'plugin:prettier/recommended',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -21,6 +21,7 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
     'react/button-has-type': 'off',
     'react/forbid-prop-types': 'off',
     'react/require-default-props': 'off',

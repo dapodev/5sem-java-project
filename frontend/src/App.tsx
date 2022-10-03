@@ -1,13 +1,20 @@
-import { SayHello } from 'components/SayHello';
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import './App.css';
+import { queryClient } from 'api/base';
+import { APP_ROUTE } from 'constants/appRoutes';
+import { AuthCheckRoute } from 'components/Routes';
 
-const App = () => {
-  return (
-    <>
-      <SayHello />
-    </>
-  );
-};
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter basename={APP_ROUTE.browserBase}>
+      <Routes>
+        <Route path={APP_ROUTE.appBase} element={<AuthCheckRoute />} />
+      </Routes>
+    </BrowserRouter>
+    <ReactQueryDevtools />
+  </QueryClientProvider>
+);
 
 export default App;

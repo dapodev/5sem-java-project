@@ -1,6 +1,8 @@
 package by.dapo.backend.controllers.auth;
 
 import by.dapo.backend.common.dto.AuthTokensDto;
+import by.dapo.backend.config.constants.AuthConfig;
+import by.dapo.backend.config.constants.Cookies;
 import by.dapo.backend.config.constants.Routes;
 import by.dapo.backend.config.constants.SubRoutes;
 import by.dapo.backend.controllers.auth.dto.SignInDto;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController()
 @RequestMapping(Routes.AUTH)
 public class AuthController {
@@ -18,7 +23,13 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping(value = SubRoutes.SIGN_IN)
-    public AuthTokensDto signIn(@RequestBody SignInDto signInDto) {
-        return this.authService.signIn(signInDto);
+    public void signIn(@RequestBody SignInDto signInDto, HttpServletResponse response) {
+        AuthTokensDto tokens = this.authService.signIn(signInDto);
+
+        Cookie accessCookie = new Cookie(Cookies.ACCESS_TOKEN_COOKIE, tokens.getAccessToken());
+        accessCookie.isHttpOnly();
+        accessCookie.setMaxAge(AuthConfig.ACCESS_TOKEN_TTL);
+
+        response.addCookie(accessCookie);
     }
 }
